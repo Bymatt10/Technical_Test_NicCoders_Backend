@@ -1,0 +1,16 @@
+CREATE DATABASE ricky;
+use ricky;
+CREATE TABLE IF NOT EXISTS ricky
+(
+    id         int PRIMARY KEY,
+    name       VARCHAR(100) not null,
+    status     boolean      not null,
+    species    varchar(100) not null,
+    type       varchar(100) not null,
+    gender     varchar(100) not null,
+    Image      varchar(100) not null,
+    url        varchar(100) not null,
+    created_at datetime,
+    updated_at datetime
+);
+

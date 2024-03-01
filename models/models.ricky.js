@@ -46,8 +46,8 @@ const Ricky = connection.sequelize.define('ricky', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    timestamps: false, // Set this to true if you want Sequelize to manage created_at and updated_at
-    tableName: 'ricky', // Set the table name if it's different from the model name
+    timestamps: false,
+    tableName: 'ricky',
 });
 
 module.exports = Ricky;
