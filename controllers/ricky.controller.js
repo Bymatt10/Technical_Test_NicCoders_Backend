@@ -1,7 +1,7 @@
 const Ricky = require('../models/models.ricky');
 
 class RickyController {
-    async get(req, res) {
+    async get(res) {
         try {
             const data = await Ricky.findAll();
             res.send(data);
@@ -13,9 +13,16 @@ class RickyController {
 
     async create(req, res) {
         try {
-            const { name, status, species, type, gender, Image, url } = req.body
-
+            const { id, name, status, species, type, gender, Image, url } = req.body
+            if (!name) return res.status(400).send('Name is required')
+            if (!status) return res.status(400).send('Status is required')
+            if (!species) return res.status(400).send('Species is required')
+            if (!type) return res.status(400).send('Type is required')
+            if (!gender) return res.status(400).send('genero is required')
+            if (!Image) return res.status(400).send('Image is required')
+            if (!url) return res.status(400).send('Url is required')
             const ricky = await Ricky.create({
+                id,
                 name,
                 status,
                 species,

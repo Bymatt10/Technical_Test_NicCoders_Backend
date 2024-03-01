@@ -4,14 +4,13 @@ const Connection = require('../models/connection')
 
 const connection = new Connection()
 const Ricky = connection.sequelize.define('ricky', {
-
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
     name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     status: {
@@ -19,32 +18,36 @@ const Ricky = connection.sequelize.define('ricky', {
         allowNull: false,
     },
     species: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     type: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.STRING(100),
+        allowNull: false,
     },
     gender: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     Image: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     url: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
-    }
-},
-    {
-        tableName: 'ricky',
-        timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at'
-    }
-)
+    },
+    created_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+}, {
+    timestamps: false, // Set this to true if you want Sequelize to manage created_at and updated_at
+    tableName: 'ricky', // Set the table name if it's different from the model name
+});
 
-module.exports = Ricky
+module.exports = Ricky;
