@@ -1,19 +1,20 @@
 const Ricky = require('../models/models.ricky');
 
 class RickyController {
-    async get(res) {
+    async get(req, res) {
         try {
-            const data = await Ricky.findAll();
-            res.send(data);
+            const rickies = await Ricky.findAll();
+
+            res.status(200).send(rickies);
         } catch (error) {
-            console.error(error)
-            res.status(500).send('An error occurred while trying to retrieve characters. Please try again.')
+            console.error(error);
+            res.status(500).send('An error occurred while trying to fetch characters. Please try again.');
         }
     }
 
     async create(req, res) {
         try {
-            const { id, name, status, species, type, gender, Image, url } = req.body
+            const { name, status, species, type, gender, Image, url } = req.body
             if (!name) return res.status(400).send('Name is required')
             if (!status) return res.status(400).send('Status is required')
             if (!species) return res.status(400).send('Species is required')
@@ -22,7 +23,7 @@ class RickyController {
             if (!Image) return res.status(400).send('Image is required')
             if (!url) return res.status(400).send('Url is required')
             const ricky = await Ricky.create({
-                id,
+
                 name,
                 status,
                 species,
@@ -40,24 +41,22 @@ class RickyController {
 
     async delete(req, res) {
         try {
-            const id = req.params.id
-
-            const destroyResult = await Ricky.destroy({
-                where: {
-                    Ricky: id
-                }
-            })
-            if (destroyResult) {
-                return res.sendStatus(204)
+            const { id } = req.params;
+            if (!id) {
+                return res.status(400).send('Character ID is required');
             }
 
-            res.status(500)
+            const ricky = await Ricky.findByPk(id);
+            if (!ricky) {
+                return res.status(404).send('Character not found');
+            }
+            await ricky.destroy();
 
+            res.status(200).send('Character deleted successfully');
         } catch (error) {
-            console.error(error)
-            res.status(500).send('An error occurred while trying to delete a character. Please try again.')
+            console.error(error);
+            res.status(500).send('An error occurred while trying to delete the character. Please try again.');
         }
-
     }
 }
 
